@@ -16,19 +16,43 @@ namespace AutomationChallenge
         static void Main(string[] args)
         {
             DriverTester runTest = new DriverTester();
-            runTest.DriverTest();
+            Console.WriteLine("This program assumes you have setup webdrivers in your PATH variable.");
+            Console.Write("Enter 1 for Chrome, 2 for FireFox, 3 for IE: ");
+            var input = Console.ReadLine();
+
+            if(input == "1")
+            {
+                IWebDriver driver = new ChromeDriver();
+                runTest.DriverTest(driver);
+            }
+            else if (input == "2")
+            {
+                IWebDriver driver = new FirefoxDriver();
+                runTest.DriverTest(driver);
+            }
+            else if (input == "3")
+            {
+                IWebDriver driver = new InternetExplorerDriver();
+                runTest.DriverTest(driver);
+            }
+            else
+            {
+                Console.WriteLine("Incorrect input.");
+                Console.ReadKey();
+            }
         }
     }
 
     class DriverTester
     {
-        public void DriverTest()
+        public void DriverTest(IWebDriver driverS)
         {
             //Chrome and Firefox confirmed working, Internet Explorer has an issue.
-            IWebDriver driver = new ChromeDriver();
+            //IWebDriver driver = new ChromeDriver();
             //IWebDriver driver = new FirefoxDriver();
             //Internet Explorer takes forever to run through step 6 so lets not use it.
             //IWebDriver driver = new InternetExplorerDriver();
+            IWebDriver driver = driverS;
 
             //Setup a max timespan to wait for to be used in steps seven, eight, and nine.
             TimeSpan span = new TimeSpan(0, 0, 0, 30, 0);
